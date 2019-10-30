@@ -5,6 +5,7 @@ import house.smart.smarthouse.repository.HomeRepository;
 import house.smart.smarthouse.service.CrudService;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class HomeServiceImpl implements CrudService<Home> {
 
