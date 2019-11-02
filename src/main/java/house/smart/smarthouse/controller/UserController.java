@@ -1,7 +1,7 @@
 package house.smart.smarthouse.controller;
 
 import house.smart.smarthouse.domain.User;
-import house.smart.smarthouse.service.UserService;
+import house.smart.smarthouse.service.CrudService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,15 +10,21 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
 
-    private final UserService userService;
+    private final CrudService<User> userService;
 
-    public UserController(UserService userService) {
+    public UserController(CrudService<User> userService) {
         this.userService = userService;
     }
 
     @PostMapping(value = "/save")
     public void save(@RequestBody User user) {
         userService.save(user);
+    }
+
+
+    @PutMapping(value = "/update")
+    public void update(@RequestBody User user) {
+        userService.update(user);
     }
 
     @GetMapping(value = "/get/{id}")

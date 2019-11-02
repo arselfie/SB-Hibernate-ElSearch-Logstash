@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+Список домов
+http://localhost:8080/home/list
+<div id="homeList"></div>
+<script>
+    $.ajax({
+        url: 'http://localhost:8080/home/list',
+        type: 'GET',
+
+        contentType: 'application/json',
+        success: function (got) {
+            console.log(got)
+            var tmpData = "";
+            var tmpHomeData = "";
+
+            for (i = 0; i < got.length; i++) {
+                console.log(got[i]);
+                $("#homeList").html($("#homeList").html()+got[i]);
+
+
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -15,6 +15,8 @@ public class User {
     @GeneratedValue
     private int id;
 
+    private String name;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -47,5 +49,13 @@ public class User {
 
     public void setHomes(List<Home> homes) {
         this.homes = homes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

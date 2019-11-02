@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+<style>
+    #list div div {
+        padding-left: 25px;
+    }
+</style>
+Тут будет список
+http://localhost:8080/user/list
+<div id="list">
+
+</div>
+<script>
+    $.ajax({
+        url: 'http://localhost:8080/user/list',
+        type: 'GET',
+        // data: JSON.stringify({
+        // name: document.getElementsByName("name")[0].value,
+        // role: document.getElementsByName("role")[0].value
+        // }),
+        contentType: 'application/json',
+        success: function (got) {
+            console.log(got)
+            var tmpData = "";
+            var tmpHomeData = "";
+
+            for (i = 0; i < got.length; i++) {
+                // console.log(got[i].homes[0])
+                if (got[i].homes.length > 0) {
+                    tmpHomeData = "";
+                    // console.log(got[i].homes[0].rooms.length)
+                    for (j = 0; j < got[i].homes[0].rooms.length; j++) {
+                        tmpHomeData += "<div>" + got[i].homes[0].rooms[j].square + " Temperature-" + got[i].homes[0].rooms[j].temperature + "</div>";
+                        // console.log(got[i].homes[0].rooms[j].square)
+                        // got[i].homes[0].rooms[j].temperature
+                    }
+                    tmpData = " Climate- " + got[i].homes[0].climateControl.name + " Recup- " + got[i].homes[0].recuperation.name
+                } else {
+                    console.log("home_empty")
+                    tmpHomeData = "";
+                }
+                document.getElementById("list").innerHTML += "<div>" + got[i].id + " " + got[i].name + " " + got[i].role + tmpData +"<button onclick=delUser("+got[i].id+")>X</button>"+ tmpHomeData + "</div>";
+
+
+            }
+        }
+    });
+    function delUser(id){
+        $.ajax({
+            url: 'http://localhost:8080/user/delete/'+id,
+            type: 'DELETE',
+            success: function (result) {
+                // Do something with the result
+                console.log(result)
+                location.href="http://localhost:8080/userList";
+            }
+        });
+    }
+
+
+
+</script>
+</body>
+</html>

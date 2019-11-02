@@ -5,6 +5,8 @@ import house.smart.smarthouse.repository.HomeRepository;
 import house.smart.smarthouse.service.CrudService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class HomeServiceImpl implements CrudService<Home> {
@@ -27,6 +29,16 @@ public class HomeServiceImpl implements CrudService<Home> {
 
     @Override
     public Home getById(int id) {
-        return repository.getOne(id);
+        return repository.findById(id).get();
+    }
+
+    @Override
+    public void update(Home home) {
+        repository.save(home);
+    }
+
+    @Override
+    public List<Home> getAll() {
+        return repository.findAll();
     }
 }

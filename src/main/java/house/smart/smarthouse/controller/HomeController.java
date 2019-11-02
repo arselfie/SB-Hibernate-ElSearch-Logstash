@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "home")
 public class HomeController {
@@ -21,6 +23,11 @@ public class HomeController {
         service.save(home);
     }
 
+    @PutMapping(value = "/update")
+    public void update(@RequestBody Home home) {
+        service.update(home);
+    }
+
     @DeleteMapping(value = "/delete/{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
         service.deleteById(id);
@@ -29,5 +36,10 @@ public class HomeController {
     @GetMapping(value = "/get/{id}")
     public Home getById(@PathVariable(value = "id") int id) {
         return service.getById(id);
+    }
+
+    @GetMapping(value = "/list")
+    public List<Home> homeList() {
+        return service.getAll();
     }
 }

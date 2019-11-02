@@ -20,15 +20,32 @@ public class Home {
     inverseJoinColumns = @JoinColumn(name = "room_fk_id"))
     private List<Room> rooms = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "home_technologie",
-            joinColumns = @JoinColumn(name = "home_fk_id"))
-    private List<String> technologies = new ArrayList<>();
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private ClimateControl climateControl;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private Recuperation recuperation;
 
     @ManyToOne
     private User user;
 
     public Home() {
+    }
+
+    public ClimateControl getClimateControl() {
+        return climateControl;
+    }
+
+    public void setClimateControl(ClimateControl climateControl) {
+        this.climateControl = climateControl;
+    }
+
+    public Recuperation getRecuperation() {
+        return recuperation;
+    }
+
+    public void setRecuperation(Recuperation recuperation) {
+        this.recuperation = recuperation;
     }
 
     public User getUser() {
@@ -37,14 +54,6 @@ public class Home {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<String> getTechnologies() {
-        return technologies;
-    }
-
-    public void setTechnologies(List<String> technologies) {
-        this.technologies = technologies;
     }
 
     public int getId() {

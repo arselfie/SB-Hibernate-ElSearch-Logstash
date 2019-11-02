@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+Add user page
+<form action="http://localhost:8080/user/save" method="post">
+    <input name="name">
+    <input name="role">
+    <button type="button" onclick="addUser()">Enter</button>
+</form>
+<a href="/userList"><button>
+    Get user list
+</button></a>
+<script>
+    function addUser(){
+        $.ajax({
+            url: 'http://localhost:8080/user/save',
+            type: 'POST',
+            data: JSON.stringify({
+                name: document.getElementsByName("name")[0].value,
+                role: document.getElementsByName("role")[0].value
+            }),
+            contentType: 'application/json',
+            success: function(got) {
+                console.log(got)
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
