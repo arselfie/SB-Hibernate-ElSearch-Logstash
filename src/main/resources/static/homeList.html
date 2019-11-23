@@ -6,29 +6,93 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
+<style>
+    #homeList{
+        width: 50%;
+        margin: 0 auto;
+    }
+    #homeList div button{
+        margin-left: 20px;
+    }
+    #homeList div div{
+        margin-left: 50px;
+    }
+</style>
 Список домов
 http://localhost:8080/home/list
 <div id="homeList"></div>
+<input placeholder="id" name="id">
+<input placeholder="userId" name="userId">
+<input placeholder="square" name="square">
+<input placeholder="temperature"   name="temperature">
+<button onclick="addHome()">Add home</button>
 <script>
+    function addHome() {
+
+        $.ajax({
+            url: 'http://localhost:8080/home/save',
+            type: 'POST',
+            data: JSON.stringify({
+
+                id: document.getElementsByName("id")[0].value,
+                user: {
+                    id: document.getElementsByName("userId")[0].value,
+                },
+                square: document.getElementsByName("square")[0].value,
+                temperature: document.getElementsByName("temperature")[0].value
+            }),
+            contentType: 'application/json',
+            success: function (got) {
+                console.log(got)
+            }
+        });
+    }
+
     $.ajax({
         url: 'http://localhost:8080/home/list',
         type: 'GET',
 
         contentType: 'application/json',
         success: function (got) {
-            console.log(got)
+            // console.log(got)
             var tmpData = "";
             var tmpHomeData = "";
+            var tmpStr = "";
+            var rooms = "";
 
             for (i = 0; i < got.length; i++) {
                 console.log(got[i]);
-                $("#homeList").html($("#homeList").html()+got[i]);
+                // got[i]
+                var tmpArray = got[i][i];
+                for (j = 0; j < got[i].rooms.length; j++) {
+                    var squre = got[i].rooms[j].square;
+                    var temper = got[i].rooms[j].temperature;
+                    rooms += "<div>" + "Square: " + squre + " ; " + "Temperature: " + temper + "</div>";
+                }
+
+                tmpStr += "<div> " +" Id: "+ got[i].id + " User: " + got[i].user.name + "<button onclick=delHome(" + got[i].id + ")>X</button>" + rooms + "</div>";
+                console.log(tmpStr);
 
 
             }
+            $("#homeList").html($("#homeList").html() + tmpStr);
         }
     });
+
+    function delHome(id) {
+        $.ajax({
+            url: 'http://localhost:8080/home/delete/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                // Do something with the result
+                console.log(result)
+                location.href = "http://localhost:8080/homeList";
+            }
+        });
+    }
 </script>
 
 </body>
 </html>
+
+

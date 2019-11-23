@@ -7,8 +7,16 @@
 </head>
 <body>
 <style>
+    #list{
+        width: 50%;
+        margin: 0 auto;
+    }
     #list div div {
         padding-left: 25px;
+
+    }
+    #list div button{
+        margin-left: 20px;
     }
 </style>
 Тут будет список
@@ -40,7 +48,8 @@ http://localhost:8080/user/list
                         // console.log(got[i].homes[0].rooms[j].square)
                         // got[i].homes[0].rooms[j].temperature
                     }
-                    tmpData = " Climate- " + got[i].homes[0].climateControl.name + " Recup- " + got[i].homes[0].recuperation.name
+                    //tmpData = " Climate- " + got[i].homes[0].climateControl.name + " Recup- " + got[i].homes[0].recuperation.name
+                    tmpData = " Technology 1: " + got[i].homes[0].climateControl.name+" , " + " Technology 2: " + got[i].homes[0].recuperation.name
                 } else {
                     console.log("home_empty")
                     tmpHomeData = "";
@@ -58,7 +67,8 @@ http://localhost:8080/user/list
             success: function (result) {
                 // Do something with the result
                 console.log(result)
-                location.href="http://localhost:8080/userList";
+                location.href="http://localhost:8080/user/list";
+                // location.href="http://localhost:8080/user/list";
             }
         });
     }

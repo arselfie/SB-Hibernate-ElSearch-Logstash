@@ -6,17 +6,33 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
+<style>
+    form {
+        width: 30%;
+        margin: 0 auto;
+        border: 1px solid lightgray;
+    }
+
+    form input, form button {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        margin-top: 5px;
+    }
+</style>
 Add user page
 <form action="http://localhost:8080/user/save" method="post">
-    <input name="name">
-    <input name="role">
+    <input placeholder="name" name="name">
+    <input placeholder="role" name="role">
     <button type="button" onclick="addUser()">Enter</button>
 </form>
-<a href="/userList"><button>
-    Get user list
-</button></a>
+<a href="/user/list">
+    <button>
+        Get user list
+    </button>
+</a>
 <script>
-    function addUser(){
+    function addUser() {
         $.ajax({
             url: 'http://localhost:8080/user/save',
             type: 'POST',
@@ -25,7 +41,7 @@ Add user page
                 role: document.getElementsByName("role")[0].value
             }),
             contentType: 'application/json',
-            success: function(got) {
+            success: function (got) {
                 console.log(got)
             }
         });
